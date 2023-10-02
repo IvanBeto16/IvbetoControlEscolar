@@ -1,0 +1,54 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "AsignarMateria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+@Scripts.Render("~/bundles/jquery")
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+
+<h2 class="text-center">Asignacion de Materias</h2>
+<br />
+<br />
+<span>
+    Se muestran los alumnos registrados para que se le puedan asignar materias, dé click en su boton a la derecha del registro para
+    acceder a Asignar Materias a su alumno.
+</span>
+<br />
+@using (Html.BeginForm("AsignarMateria", "Alumno", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <br />
+    <table class="table table-responsive table-dark table-bordered table-striped" id="myTable">
+        <thead>
+            <tr>
+                <th class="text-bg-secondary text-center">Nombre(s) del Alumno</th>
+                <th class="text-bg-secondary text-center">Apellido Paterno</th>
+                <th class="text-bg-secondary text-center">Apellido Materno</th>
+                <th class="text-bg-secondary text-center">Materias Asignadas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ML.Alumno alumno in Model.Alumnos)
+            {
+                <tr>
+                    <td class="text-center">@alumno.Nombre</td>
+                    <td class="text-center">@alumno.ApellidoPaterno</td>
+                    <td class="text-center">@alumno.ApellidoMaterno</td>
+                    <td class="text-center"><a href="@Url.Action("MateriasAsignadas", "AlumnoMateria", new { idAlumno = alumno.IdAlumno })" class="btn btn-warning">Materias</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript">
+    let table = new DataTable('#myTable', {
+        reponsive: true,
+        "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "Todos"]],
+        searching: false,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+        },
+    });
+</script>

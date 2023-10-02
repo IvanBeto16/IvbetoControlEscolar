@@ -1,0 +1,101 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "MateriasNoAsignadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+
+
+<h2 class="text-center">Materias Para Asignar</h2>
+<hr />
+<br />
+<span>Estas son las materias que no tiene asignadas el alumno: </span>
+@using (Html.BeginForm("InscribirMaterias", "AlumnoMateria", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => Model.Alumno.IdAlumno)
+    if (Model.Materia.Materias.Count != 0)
+    {
+        <br />
+        <table class="table table-responsive table-dark table-bordered">
+            <thead>
+                <tr>
+                    <th>No.Materia</th>
+                    <th>Nombre de la Materia</th>
+                    <th>Costo en ($ MXN)</th>
+                    <th>Seleccionar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ML.AlumnoMateria materia in Model.Materia.Materias)
+                {
+                    <tr>
+                        <td>@materia.Materia.IdMateria</td>
+                        <td>@materia.Materia.Nombre</td>
+                        <td>@materia.Materia.Costo</td>
+                        <td style="text-align: center; vertical-align: middle">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="switchStatusDefault"
+                                       value="@materia.Materia.IdMateria"
+                                       name="idMaterias" onchange="Suma(this, @materia.Materia.Costo)" />
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <br />
+        <div class="bg-light d-flex">
+            <span class="bg-info">Ese es el total de la Inscripcion: </span>
+            <input type="text" class="form-control" value="0" readonly id="totalCosto" />
+
+        </div>
+        <br />
+        <input type="submit" class="btn btn-success" value="Inscribir Materia(s)" />
+        <br />
+    }
+    else
+    {
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Well done!</h4>
+            <p>Usted está tan loco por estudiar que ya no tenemos materias para inscribir para usted, no se desanime, mejor pase las que ya inscribió.</p>
+            <hr>
+            <p class="mb-0">Recuerde que si quiere dar de baja alguna, haga click en eliminar a lado del registro de su materia.</p>
+        </div>
+    }
+    <br />
+    <a class="btn btn-danger" href="@Url.Action("MateriasAsignadas", "AlumnoMateria", new { idAlumno = Model.Alumno.IdAlumno })"><i class="fa-solid fa-rotate-left" style="color: #f1f2f3;"></i> Regresar a Asignar Materias</a>
+
+}
+
+<script type="text/javascript">
+    function Suma(e, valor) {
+        var total = document.getElementById("totalCosto");
+        var costo = total.value;
+
+        if (e.checked) {
+            costo = parseFloat(costo) + parseFloat(valor);
+        } else {
+            costo = parseFloat(costo) - parseFloat(valor);
+        }
+
+        if (costo < 0) { //Para evitar valores negativos
+            costo = 0
+        }
+        total.value = "";
+        total.value = parseFloat(costo);
+    }
+
+    function Add(e, valor) {
+        var materias = document.getElementById("materias");
+        let arrayMaterias = [];
+        if (e.checked) {
+            arrayMaterias.push(valor)
+        } else {
+            arrayMaterias.splice(valor, 1)
+        }
+
+        materias.value = "";
+        materias.value = (arrayMaterias);
+    }
+</script>

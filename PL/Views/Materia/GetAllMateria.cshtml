@@ -1,0 +1,55 @@
+﻿@model ML.Materia
+@{
+    ViewBag.Title = "GetAllMateria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+@Scripts.Render("~/bundles/jquery")
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+<h2 class="text-center">Materias Disponibles</h2>
+<br />
+<br />
+<span>Este es el lista de las materias disponibles a inscribir y su costo correspondiente</span>
+<span>Para agregar más materias, pulse el botón de Agregar Materia</span>
+<br />
+<a class="btn btn-success" href="#">Agregar Materia</a>
+<br />
+<hr />
+@using (Html.BeginForm("GetAllMateria", "Materia", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <table class="table table-responsive table-dark table-striped" id="myTable">
+        <thead>
+            <tr>
+                <th class="text-center">Editar Elemento</th>
+                <th class="text-center">No. Materia</th>
+                <th class="text-center">Nombre de la Materia</th>
+                <th class="text-center">Costo de Inscripcion ($ MXN)</th>
+                <th class="text-center">Eliminar Elemento</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ML.Materia materia in Model.Materias)
+            {
+                <tr>
+                    <td class="text-center"><a class="btn btn-info" href="#"><i class="fa-solid fa-user-pen" style="color: #0d136e;"></i></a></td>
+                    <td class="text-center">@materia.IdMateria</td>
+                    <td class="text-center">@materia.Nombre</td>
+                    <td class="text-center">@materia.Costo</td>
+                    <td class="text-center"><a class="btn btn-danger" href="#"><i class="fa-solid fa-user-minus" style="color: #040345;"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript">
+    let table = new DataTable('#myTable', {
+        reponsive: true,
+        "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "Todos"]],
+        searching: false,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+        },
+    });
+</script>

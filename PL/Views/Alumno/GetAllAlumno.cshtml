@@ -1,0 +1,56 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "GetAllAlumno";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+@Scripts.Render("~/bundles/jquery")
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+
+<h2 class="text-center">Catalogo de Alumnos</h2>
+<br />
+<p>Aqui se muestran a los alumnos que estan registrados en el sistema</p>
+<p>Para agregar alumnos nuevos, pulse el boton llamado "Agregar Alumno"</p>
+<a class="btn btn-success" href="@Url.Action("Form", "Alumno", new { idAlumno = Model.IdAlumno })"> Agregar Alumno</a>
+<br />
+<br />
+@using (Html.BeginForm("GetAllAlumno", "Alumno", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <table class="table table-responsive table-dark table-striped" id="myTable">
+        <thead>
+            <tr>
+                <th>Editar Alumno</th>
+                <th>No. Alumno</th>
+                <th>Nombre(s)</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Eliminar Alumno</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ML.Alumno alumno in Model.Alumnos)
+            {
+                <tr>
+                    <td><a class="btn btn-info" href="@Url.Action("Form", "Alumno", new { idAlumno = alumno.IdAlumno })"><i class="fa-solid fa-user-pen" style="color: #053fa3;"></i></a></td>
+                    <td>@alumno.IdAlumno</td>
+                    <td>@alumno.Nombre</td>
+                    <td>@alumno.ApellidoPaterno</td>
+                    <td>@alumno.ApellidoMaterno</td>
+                    <td><a class="btn btn-danger" href="@Url.Action("Delete", "Alumno", new { idAlumno = alumno.IdAlumno })" onclick = "return Confirm('Seguro de eliminar al alumno?')"><i class="fa-solid fa-user-minus" style="color: #040345;"></i></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript">
+    let table = new DataTable('#myTable', {
+        reponsive: true,
+        "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "Todos"]],
+        searching: false,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+        },
+    });
+</script>

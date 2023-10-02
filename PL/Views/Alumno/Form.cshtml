@@ -1,0 +1,37 @@
+﻿@model ML.Alumno
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Registo y Actualizacion de Alumnos</h2>
+<br />
+<br />
+<span>Llene los campos correspondientes para registrar o actualizar el información del Alumno</span>
+<hr />
+<span>Información Básica</span>
+@using (Html.BeginForm("Form", "Alumno", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => Model.IdAlumno)
+    <div class="row row-cols-2">
+        <div class="col-lg-6">
+            @Html.LabelFor(model => Model.Nombre)
+            @Html.TextBoxFor(model => Model.Nombre, new { @class = "form-control" })
+        </div>
+        <div class="col-lg-6">
+            @Html.LabelFor(model => Model.ApellidoPaterno)
+            @Html.TextBoxFor(model => Model.ApellidoPaterno, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row row-cols-2">
+        <div class="col-lg-6">
+            @Html.LabelFor(model => Model.ApellidoMaterno)
+            @Html.TextBoxFor(model => Model.ApellidoMaterno, new { @class = "form-control" })  
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <button type="submit" class="btn btn-success">Agregar Alumno</button>
+    <a class="btn btn-danger" href="@Url.Action("GetAllAlumno", "Alumno")"> Regresar a la Lista</a>
+}

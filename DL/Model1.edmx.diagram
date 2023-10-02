@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1f23435e0aa54379945d04dce0ab506d" Name="Diagram1">
+        <EntityTypeShape EntityType="IvbetoControlEscolarModel.Alumno" Width="1.5" PointX="1.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IvbetoControlEscolarModel.Materia" Width="1.5" PointX="5.375" PointY="0.625" IsExpanded="true" />
+        <AssociationConnector Association="IvbetoControlEscolarModel.AlumnoMateria" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

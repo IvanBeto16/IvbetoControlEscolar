@@ -1,0 +1,62 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "MateriasAsignadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Materias Asignadas al Alumno</h2>
+<br />
+<br />
+<span>Este es el lista de Materias que el Alumno tiene asignadas en su Matricula Escolar</span>
+<br />
+<span>Para poder asignarle más materias, de click en el boton</span> <a class="btn btn-warning" href="@Url.Action("MateriasNoAsignadas", "AlumnoMateria", new { idAlumno = Model.Alumno.IdAlumno })"><i class="fa-solid fa-plus"></i> Asignar Materias</a>
+<br />
+<hr />
+@using (Html.BeginForm("MateriasAsginadas", "AlumnoMateria", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => Model.Alumno.IdAlumno)
+
+    if (Model.Materia.Materias.Count != 0)
+    {
+        <span class="d-block p-3 text-bg-dark">Matricula Correspondiente</span>
+        <table class="table table-responsive table-dark table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>No. Materia</th>
+                    <th>Nombre de la Materia</th>
+                    <th>Costo de la Materia ($)</th>
+                    <th>Eliminar Materia</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ML.AlumnoMateria materia in Model.Materia.Materias)
+                {
+                    <tr>
+                        <td>@materia.Materia.IdMateria</td>
+                        <td>@materia.Materia.Nombre</td>
+                        <td>@materia.Materia.Costo</td>
+                        <td><a class="btn btn-danger" href="#">Eliminar</a></td>
+                    </tr>
+                }
+
+
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">OH NO!</h4>
+            <p>Parece que el alumno que has seleccionado aún no tiene materias inscritas para algún curso de su interés.</p>
+            <hr>
+            <p class="mb-0">Haz click en el botón de Asignar Materias para darle al alumno materias para estudiar.</p>
+        </div>
+    }
+
+}
+<br />
+<br />
+<a class="btn btn-danger" href="@Url.Action("AsignarMateria", "Alumno")"><i class="fa-solid fa-rotate-left" style="color: #f1f2f3;"></i> Regresar a Asignar Materias</a>
+
+
